@@ -25,6 +25,7 @@ print data
 data.pop()
 print data
 # 리스트 요소 인덱스 검색
+print data.index("hi")
 # index 메소드 실패 시 에러 발생
 # print data.index("hi222")
 
