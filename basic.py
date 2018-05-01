@@ -30,6 +30,7 @@ print data.index("hi")
 # print data.index("hi222")
 
 # 사전(딕셔너리)
+# { 키 : 값 }
 user = {}
 user['me'] = {'age' : 30, 'address' : 'daejoen'}
 user['you'] = {'age' : 22, 'address' : 'seoul'}
