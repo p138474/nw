@@ -3,12 +3,16 @@ from flask import Flask, render_template, request, g, redirect, session, escape
 import hashlib
 import sqlite3
 
+# render_template : 템플릿을 랜더한다..?
+# redirect : 이미 로그인 했을 경우, 다시 원래페이지로 돌아가는 기능
+# session : 로그인되었다는 상태 유지
+
 DATABASE = 'database.db'
 
 app = Flask(__name__)
 app.secret_key = b'_wlkfjlkdjmnwlslke26k'
 
-def get_db():
+def get_db():                   # 데이터베이스를 가져온다
     db = getattr(g, '_database', None)
     if db is None:
         db = g._database = sqlite3.connect(DATABASE)
@@ -29,9 +33,10 @@ def query_db(query, args=(), one=False, modify=False):
         except:
             return False
         return True
-    rv = cur.fetchall()
+    rv = cur.fetchall()         # 데이터를 적정 수준만큼 끊어서 가져오는게 좋음 (백만개 중 만개씩) ex) 게시판 글
     cur.close()
-    return (rv[0] if rv else None) if one else rv
+    return (rv[0] if rv else None) if one else rv       #if one이 거짓이라면 rv를 return
+                                                        #if rv가 0이면 첫번째 값, 결과값이 없으면 None
 
 @app.route('/logout')
 def logout():
@@ -62,7 +67,9 @@ def login():
         else:
             # 로그인이 실패한 경우
             return "<script>alert('login fail');history.back(-1);</script>"
-    
+
+# digest : 메세지 축약, 내용을 간단히 추려 적음
+
     if 'id' in session:
         return redirect("/")
 
